@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Number Generator</title>
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- _hyperscript - HTMX's companion for client-side scripting -->
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
     <style>
         * {
             margin: 0;
@@ -43,6 +47,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: transform 0.1s;
+        }
+
+        .number-display.pop {
+            transform: scale(1.1);
         }
 
         button {
@@ -70,17 +79,14 @@
     <div class="container">
         <h1>Random Number Generator</h1>
         <div class="number-display" id="numberDisplay">?</div>
-        <button id="generateBtn">Generate Number</button>
+        <button _="on click
+                   set randomNum to Math.floor(Math.random() * 100) + 1
+                   put randomNum into #numberDisplay
+                   add .pop to #numberDisplay
+                   wait 100ms
+                   remove .pop from #numberDisplay">
+            Generate Number
+        </button>
     </div>
-
-    <script>
-        const generateBtn = document.getElementById('generateBtn');
-        const numberDisplay = document.getElementById('numberDisplay');
-
-        generateBtn.addEventListener('click', () => {
-            const randomNumber = Math.floor(Math.random() * 100) + 1;
-            numberDisplay.textContent = randomNumber;
-        });
-    </script>
 </body>
 </html>
